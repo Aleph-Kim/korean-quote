@@ -25,13 +25,10 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v6
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/korean-quote:latest
+    - name: Build Docker image  # Step 6: 어플리케이션용 Docker 이미지 빌드
+      run: |
+        docker build . -t ${{ secrets.DOCKER_USERNAME }}/korean-quote:${{ github.sha }}  # GitHub SHA로 태그한 Docker 이미지 빌드
+        docker tag ${{ secrets.DOCKER_USERNAME }}/korean-quote:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/korean-quote:latest  # Docker 이미지를 'latest'로 태그
 
   deploy:
     runs-on: ubuntu-latest
