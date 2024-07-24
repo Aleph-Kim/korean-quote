@@ -38,22 +38,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Deploy to Server
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SERVER_IP: ${{ secrets.SERVER_IP }}
-      run: |
-        ssh ${SERVER_USER}@${SERVER_IP} << 'EOF'
-          docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-          docker pull ${DOCKER_USERNAME}/korean-quote:latest
-          docker stop korean-quote || true
-          docker rm korean-quote || true
-          docker run -d --name korean-quote -p 3000:3000 ${DOCKER_USERNAME}/korean-quote:latest
-        EOF
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/korean-quote:${{ github.sha }}
+          sudo docker stop korean-quote || true
+          sudo docker rm korean-quote || true  # Docker 컨테이너 삭제 (오류 무시)
+          sudo docker run -d -p 3000:3000 --name korean-quote ${{ secrets.DOCKER_USERNAME }}/korean-quote:${{ github.sha }}
