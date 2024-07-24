@@ -31,7 +31,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/express-app:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/korean-quote:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -55,8 +55,8 @@ jobs:
       run: |
         ssh ${SERVER_USER}@${SERVER_IP} << 'EOF'
           docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-          docker pull ${DOCKER_USERNAME}/express-app:latest
-          docker stop express-app || true
-          docker rm express-app || true
-          docker run -d --name express-app -p 3000:3000 ${DOCKER_USERNAME}/express-app:latest
+          docker pull ${DOCKER_USERNAME}/korean-quote:latest
+          docker stop korean-quote || true
+          docker rm korean-quote || true
+          docker run -d --name korean-quote -p 3000:3000 ${DOCKER_USERNAME}/korean-quote:latest
         EOF
