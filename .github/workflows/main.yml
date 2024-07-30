@@ -28,7 +28,7 @@ jobs:
 
     - name: Build Docker image # Docker 이미지 빌드
       run: |
-        docker build . -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:${{ github.sha }} # Docker 이미지 빌드 및 태그
+        docker build . -f Dockerfile.prod -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:${{ github.sha }} # Docker 이미지 빌드 및 태그
         docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest # latest 태그 추가
     
     - name: Push Docker image to Docker Hub # Docker hub에 이미지 push
