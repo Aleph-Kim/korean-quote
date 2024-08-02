@@ -2,7 +2,7 @@
 FROM node:20
 
 # 작업 디렉토리 설정
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # 패키지 설치를 위해 package.json 및 package-lock.json 복사
 COPY package*.json ./

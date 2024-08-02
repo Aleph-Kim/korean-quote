@@ -2,16 +2,17 @@
   "name": "korean-random-quote",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon -L src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon -L app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "body-parser": "1.20.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
