@@ -8,7 +8,7 @@ const quoteController = require('../controllers/quoteController');
  * @param {string} author 명언을 남긴 사람
  * @param {string} author_profile 명언을 남긴 사람에 대한 설명
  */
-router.post('/create', quoteController.createQuote);
+router.post('/', quoteController.createQuote);
 
 /**
  * 명언 랜덤 조회
