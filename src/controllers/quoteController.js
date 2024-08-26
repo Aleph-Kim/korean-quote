@@ -10,4 +10,13 @@ const createQuote = async (req, res) => {
     }
 };
 
-module.exports = { createQuote };
+const randomQuote = async (req, res) => {
+    try {
+        const quote = await quoteService.randomQuote();
+        successResponse(res, quote);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+}
+
+module.exports = { createQuote, randomQuote };

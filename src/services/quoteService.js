@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const quoteModel = require("../models/quote")
 
 class QuoteService {
@@ -11,6 +12,17 @@ class QuoteService {
 
         const quote = await quoteModel.create(data);
         return quote;
+    }
+
+    async randomQuote(){
+        const quote = await quoteModel.findOne({
+            order: Sequelize.literal('RANDOM()')
+        });
+        return {
+            body: quote.body,
+            author: quote.author,
+            author_profile: quote.authorProfile,
+        }
     }
 }
 
