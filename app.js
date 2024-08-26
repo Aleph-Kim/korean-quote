@@ -10,12 +10,21 @@ const PORT = 3000;
 const quoteRoutes = require('./routes/quoteRoutes');
 
 const sequelize = require('./config/db')
+const notFoundHandler = require('./middlewares/notFoundHandler');
+const errorHandler = require('./middlewares/errorHandler');
+
 
 // 미들웨어 설정
 app.use(bodyParser.json());
 
 // 라우트 설정
 app.use('/', quoteRoutes);
+
+// 404 에러 핸들링 미들웨어
+app.use(notFoundHandler);
+
+// 에러 핸들링 미들웨어
+app.use(errorHandler);
 
 // 데이터베이스 동기화 및 서버 시작
 sequelize.sync({ alter: true }).then(() => {

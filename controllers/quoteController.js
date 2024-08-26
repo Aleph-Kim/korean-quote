@@ -1,7 +1,9 @@
+const { successResponse, errorResponse } = require('../helper/responseHelper');
+
 exports.getRandom = async (req, res) => {
     try {
-        res.status(200).send("Hello World!");
+        successResponse(res, {}, "Hello World!");
     } catch (err) {
-        res.status(500).send(err);
+        errorResponse(res, err.message);
     }
 };
