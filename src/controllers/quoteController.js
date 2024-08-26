@@ -1,6 +1,11 @@
 const { successResponse, errorResponse } = require('../helpers/responseHelper');
 const quoteService = require("../services/quoteService");
 
+/**
+ * 명언 생성
+ * @param {*} req 요청 객체
+ * @param {*} res 응답 객체
+ */
 const createQuote = async (req, res) => {
     try {
         const quote = await quoteService.createQuote(req.body);
@@ -10,6 +15,11 @@ const createQuote = async (req, res) => {
     }
 };
 
+/**
+ * 명언 랜덤 조회
+ * @param {*} req 요청 객체
+ * @param {*} res 응답 객체
+ */
 const randomQuote = async (req, res) => {
     try {
         const quote = await quoteService.randomQuote();

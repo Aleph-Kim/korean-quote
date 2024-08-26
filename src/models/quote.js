@@ -1,6 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
+/**
+ * 명언 객체
+ */
 const quote = sequelize.define('quote', {
   id: {
     type: DataTypes.INTEGER,
