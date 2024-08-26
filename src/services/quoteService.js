@@ -7,12 +7,14 @@ class QuoteService {
      * @param {*} data 
      * @returns quote 객체
      */
-    async createQuote(data){
-        switch(true){
+    async createQuote(data) {
+        switch (true) {
             case !data.body:
                 throw new Error("명언 내용을 입력해주세요.");
             case !data.author:
                 throw new Error("작성자를 입력해주세요.");
+            case !data.category:
+                throw new Error("카테고리를 선택해주세요.");
         }
 
         const quote = await quoteModel.create(data);
@@ -23,7 +25,7 @@ class QuoteService {
      * 명언 랜덤 조회
      * @returns quote 객체
      */
-    async randomQuote(){
+    async randomQuote() {
         const quote = await quoteModel.findOne({
             order: Sequelize.literal('RANDOM()')
         });
