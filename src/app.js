@@ -10,6 +10,7 @@ const PORT = 3000;
 const quoteRoutes = require('./routes/quoteRoutes');
 
 const sequelize = require('./config/db')
+
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const errorHandler = require('./middlewares/errorHandler');
 

@@ -1,4 +1,4 @@
-const { successResponse, errorResponse } = require('../helper/responseHelper');
+const { successResponse, errorResponse } = require('../helpers/responseHelper');
 
 exports.getRandom = async (req, res) => {
     try {

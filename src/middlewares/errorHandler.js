@@ -1,4 +1,4 @@
-const { errorResponse } = require('../helper/responseHelper');
+const { errorResponse } = require('../helpers/responseHelper');
 
 const errorHandler = (err, req, res, next) => {
     console.error(err); // 에러 로깅
