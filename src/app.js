@@ -10,6 +10,7 @@ const PORT = 3000;
 const quoteRoutes = require('./routes/quoteRoutes');
 
 const sequelize = require('./config/db')
+const quoteModel = require('./models/quote')
 
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const errorHandler = require('./middlewares/errorHandler');
@@ -19,7 +20,7 @@ const errorHandler = require('./middlewares/errorHandler');
 app.use(bodyParser.json());
 
 // 라우트 설정
-app.use('/', quoteRoutes);
+app.use('/quote', quoteRoutes);
 
 // 404 에러 핸들링 미들웨어
 app.use(notFoundHandler);
