@@ -10,6 +10,8 @@ const PORT = 3000;
 const quoteRoutes = require('./routes/quoteRoutes');
 
 const sequelize = require('./config/db')
+const beforeValidateHandler = require('./middlewares/beforeValidateHandler');
+
 const quoteModel = require('./models/quote')
 
 const notFoundHandler = require('./middlewares/notFoundHandler');
@@ -27,6 +29,8 @@ app.use(notFoundHandler);
 
 // 에러 핸들링 미들웨어
 app.use(errorHandler);
+
+beforeValidateHandler(sequelize);
 
 // 데이터베이스 동기화 및 서버 시작
 sequelize.sync({ alter: true }).then(() => {
