@@ -29,7 +29,17 @@ const randomQuote = async (req, res, next) => {
     }
 }
 
+const todayQuote = async (req, res, next) => {
+    try {
+        const quote = await quoteService.todayQuote();
+        return successResponse(res, quote);
+    } catch (err) {
+        next(err)
+    }
+}
+
 module.exports = { 
     createQuote, 
-    randomQuote
+    randomQuote,
+    todayQuote
 };

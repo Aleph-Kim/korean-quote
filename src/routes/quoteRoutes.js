@@ -15,4 +15,9 @@ router.post('/', quoteController.createQuote);
  */
 router.get('/random', quoteController.randomQuote);
 
+/**
+ * 오늘의 명언 조회
+ */
+router.get('/today', quoteController.todayQuote);
+
 module.exports = router;

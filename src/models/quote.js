@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 /**
- * 명언 객체
+ * 명언
  */
 const quoteModel = sequelize.define('quote', {
     id: {
@@ -34,11 +34,10 @@ const quoteModel = sequelize.define('quote', {
             }
         },
         comment: "명언의 카테고리"
-    }
+    },
 }, {
     timestamps: true,
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    underscored: true
 });
 
 module.exports = quoteModel;

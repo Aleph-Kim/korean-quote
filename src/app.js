@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -13,10 +12,10 @@ const sequelize = require('./config/db')
 const beforeValidateHandler = require('./middlewares/beforeValidateHandler');
 
 const quoteModel = require('./models/quote')
+const todayQuoteModel = require('./models/todayQuote')
 
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const errorHandler = require('./middlewares/errorHandler');
-
 
 // 미들웨어 설정
 app.use(bodyParser.json());
@@ -32,14 +31,12 @@ app.use(errorHandler);
 
 beforeValidateHandler(sequelize);
 
-// 데이터베이스 동기화 및 서버 시작
-sequelize.sync({ alter: true }).then(() => {
-    console.info('Database & tables 생성');
+// 데이터베이스 동기화
+// sequelize.sync({ force: true }).then(() => {
+//     console.info('Database & tables 생성');
+// });
 
-    // 기본적인 라우트 설정
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
-}).catch(err => {
-    console.error('Database 연결 중 오류 발생:', err);
+// 기본적인 라우트 설정
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
