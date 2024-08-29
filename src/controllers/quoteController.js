@@ -6,12 +6,12 @@ const quoteService = require("../services/quoteService");
  * @param {*} req 요청 객체
  * @param {*} res 응답 객체
  */
-const createQuote = async (req, res) => {
+const createQuote = async (req, res, next) => {
     try {
         const quote = await quoteService.createQuote(req.body);
-        successResponse(res, quote, "명언 데이터가 생성되었습니다.");
+        return successResponse(res, quote, "명언 데이터가 생성되었습니다.");
     } catch (err) {
-        errorResponse(res, err.message);
+        next(err)
     }
 };
 
@@ -20,13 +20,16 @@ const createQuote = async (req, res) => {
  * @param {*} req 요청 객체
  * @param {*} res 응답 객체
  */
-const randomQuote = async (req, res) => {
+const randomQuote = async (req, res, next) => {
     try {
         const quote = await quoteService.randomQuote();
-        successResponse(res, quote);
+        return successResponse(res, quote);
     } catch (err) {
-        errorResponse(res, err.message);
+        next(err)
     }
 }
 
-module.exports = { createQuote, randomQuote };
+module.exports = { 
+    createQuote, 
+    randomQuote
+};
