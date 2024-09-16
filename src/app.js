@@ -7,6 +7,7 @@ const app = express();
 const PORT = 3000;
 
 const quoteRoutes = require('./routes/quoteRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const sequelize = require('./config/db')
 const beforeValidateHandler = require('./middlewares/beforeValidateHandler');
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 
 // 라우트 설정
 app.use('/quote', quoteRoutes);
+app.use('/admin', adminRoutes);
 
 // 404 에러 핸들링 미들웨어
 app.use(notFoundHandler);
