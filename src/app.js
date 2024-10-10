@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
+const cors = require('cors');
+
 const quoteRoutes = require('./routes/quoteRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
@@ -17,6 +19,8 @@ const todayQuoteModel = require('./models/todayQuote')
 
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const errorHandler = require('./middlewares/errorHandler');
+
+app.use(cors());
 
 // 미들웨어 설정
 app.use(bodyParser.json());
