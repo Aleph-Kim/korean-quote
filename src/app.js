@@ -20,12 +20,15 @@ const todayQuoteModel = require('./models/todayQuote')
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const errorHandler = require('./middlewares/errorHandler');
 
+const path = require('path');
+
 app.use(cors());
 
 // 미들웨어 설정
 app.use(bodyParser.json());
 
 // 라우트 설정
+app.use('/api-docs', express.static('doc'));
 app.use('/quote', quoteRoutes);
 app.use('/admin', adminRoutes);
 
