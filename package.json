@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "dev": "nodemon -L src/app.js",
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "api": "nodemon -L --watch src/routes --ext js --exec \"apidoc -i src/routes -o doc/\""
   },
   "keywords": [],
   "author": "",
