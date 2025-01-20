@@ -2,6 +2,16 @@ const { successResponse, errorResponse } = require('../helpers/responseHelper');
 const adminService = require('../services/adminService');
 
 class AdminController {
+    async quoteList(req, res, next) {
+        const quotes = await adminService.quoteList();
+
+        res.render("layout/main", {
+            title: "명언 목록",
+            body: "quote/list",
+            quotes: quotes
+        })
+    }
+
 
     /**
      * 명언 생성

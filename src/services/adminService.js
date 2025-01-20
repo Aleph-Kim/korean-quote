@@ -1,6 +1,27 @@
 const quoteModel = require("../models/quote")
+const sequelize = require('../config/db');
 
 class AdminService {
+    /**
+     * 명언 목록
+     * @returns quote 객체 배열
+     */
+    async quoteList() {
+        const quotes = await quoteModel.findAll({
+            attributes: [
+                'id',
+                'body',
+                'author',
+                [
+                    sequelize.literal(`TO_CHAR(created_at, 'YYYY-MM-DD')`),
+                    'createdAt',
+                ],
+            ],
+            order: [['id', 'DESC']],
+        });
+        return quotes;
+    }
+
     /**
      * 명언 생성
      * @param {*} data 

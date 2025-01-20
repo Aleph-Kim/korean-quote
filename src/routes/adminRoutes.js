@@ -4,6 +4,8 @@ const router = express.Router();
 
 const adminController = require('../controllers/adminController');
 
+router.get('/list', adminController.quoteList);
+
 /**
  * 명언 생성
  * @param {string} body 명언 내용
