@@ -3,13 +3,38 @@ const adminService = require('../services/adminService');
 
 class AdminController {
     async quoteList(req, res, next) {
-        const quotes = await adminService.quoteList();
+        // 페이지 번호
+        const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+
+        // 한 페이지당 표시할 데이터 개수
+        const pageSize = 10;
+
+        // 표시할 페이지 개수
+        const showPageCount = 10;
+
+        const { rows: quotes, count } = await adminService.quoteList(page, pageSize);
+
+        // 전체 페이지 수
+        const totalPages = Math.ceil(count / pageSize);
+
+        if (totalPages < page) {
+            res.redirect(`/admin/list?page=${totalPages}`)
+        }
+
+        // 페이지네이션 시작 숫자
+        const startPage = Math.max(1, page - (showPageCount / 2));
+        // 페이지네이션 끝 숫자
+        const endPage = Math.min(totalPages, page + (showPageCount / 2));
 
         res.render("layout/main", {
             title: "명언 목록",
             body: "quote/list",
-            quotes: quotes
-        })
+            quotes,
+            currentPage: page,
+            totalPages,
+            startPage,
+            endPage
+        });
     }
 
 

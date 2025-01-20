@@ -4,10 +4,14 @@ const sequelize = require('../config/db');
 class AdminService {
     /**
      * 명언 목록
-     * @returns quote 객체 배열
+     * @param {number} page - 현재 페이지
+     * @param {number} pageSize - 페이지 당 데이터 수
+     * @returns {Object} { rows, count }
      */
-    async quoteList() {
-        const quotes = await quoteModel.findAll({
+    async quoteList(page, pageSize) {
+        const offset = (page - 1) * pageSize;
+
+        const { rows, count } = await quoteModel.findAndCountAll({
             attributes: [
                 'id',
                 'body',
@@ -18,8 +22,11 @@ class AdminService {
                 ],
             ],
             order: [['id', 'DESC']],
+            limit: pageSize,
+            offset: offset
         });
-        return quotes;
+
+        return { rows, count };
     }
 
     /**
