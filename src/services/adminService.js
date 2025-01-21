@@ -61,8 +61,19 @@ class AdminService {
      * @returns quote 객체
      */
     async createQuote(data) {
-        const quote = await quoteModel.create(data);
-        return quote;
+        return await quoteModel.create(data);
+    }
+
+    /**
+     * 명언 수정
+     * @param {*} data 
+     * @returns quote 객체
+     */
+    async updateQuote(data) {
+        return await quoteModel.update(data, {
+            fields: ['body', 'author', 'authorProfile', 'category'],
+            where: { id: data.id }
+        });
     }
 
     /**

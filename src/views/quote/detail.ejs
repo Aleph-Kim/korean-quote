@@ -1,32 +1,35 @@
 <div class="max-w-xl mx-auto bg-white border border-gray-200 rounded-lg shadow-sm p-6 space-y-6">
   <!-- 페이지 제목 -->
   <h1 class="text-bold text-xl mb-4">
-    명언 상세
+    명언 <%- (quote.id) ? "상세" : "생성" %>
   </h1>
 
-  <form action="/admin/detail/<%- quote.id %>" method="POST" class="space-y-4">
-    <!-- 명언 본문 -->
-    <div id="body" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-blue-500" contenteditable="true" oninput="syncContent()" style="min-height: 6rem;">
-      <%- quote.body %>
-    </div>
+  <form id="quoteForm" action="/admin/create" method="POST" class="space-y-4">
+    <input type="hidden" id="id" name="id" value="<%- quote.id %>">
 
-    <!-- 작성자 -->
+    <!-- 명언 본문 -->
+    <textarea id="body" name="body" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-24 resize-none" placeholder="명언 내용을 입력해주세요." required><%- quote.body %></textarea>
+
+    <input type="hidden" name="category" value="개발" />
+
+    <!-- 남긴이 -->
     <div>
       <label for="author" class="block text-sm font-medium text-gray-700">
-        작성자
+        남긴이
       </label>
-      <input type="text" id="author" name="author" value="<%- quote.author %>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required />
+      <input type="text" id="author" name="author" value="<%- quote.author %>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="남긴이를 입력해주세요." required />
     </div>
 
-    <!-- 작성자 프로필 -->
+    <!-- 남긴이 설명 -->
     <div>
       <label for="authorProfile" class="block text-sm font-medium text-gray-700">
-        작성자 정보
+        남긴이 설명
       </label>
-      <input type="text" id="authorProfile" name="authorProfile" value="<%- quote.authorProfile %>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+      <input type="text" id="authorProfile" name="authorProfile" value="<%- quote.authorProfile %>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="남긴이 설명을 입력해주세요." />
     </div>
 
     <!-- 생성일 / 마지막 수정일 -->
+    <% if (quote.id) { %>
     <div class="text-sm text-gray-600">
       <p>
         생성일:
@@ -37,6 +40,7 @@
         <span class="font-semibold"><%- quote.updatedAt %></span>
       </p>
     </div>
+    <% } %>
 
     <div class="flex space-x-4 pt-4">
       <!-- 저장하기 -->
@@ -51,3 +55,52 @@
     </div>
   </form>
 </div>
+
+<script>
+  const form = document.getElementById('quoteForm');
+  const idInput = document.getElementById('id');
+
+  let isRunning = false; // 폼 제출 중인지 체크하는 플래그 
+
+  // 폼 제출 핸들러
+  async function formSubmitHandler(event) {
+    event.preventDefault();
+
+    // 만약 이미 제출 요청이 진행 중이면 새 요청을 무시하고 함수 종료
+    if (isRunning) {
+      return;
+    }
+
+    isRunning = true;
+
+    // 폼 데이터 json으로 변환
+    const formData = new FormData(form);
+    const dataObject = Object.fromEntries(formData.entries());
+    const jsonData = JSON.stringify(dataObject);
+
+    const response = await fetch('/admin/quote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: jsonData
+    });
+
+    // 서버로부터 받은 응답
+    const result = await response.json();
+
+    // 결과 메시지 표시
+    alert(result.message)
+
+    isRunning = false;
+
+    if (dataObject.id) { // 수정이었을 경우 새로고침
+      window.location.reload();
+    } else { // 생성이었을 경우 상세 페이지로 이동
+      window.location.href = `/admin/detail/${result.data.id}`;
+    }
+  }
+
+  // form에 submit handler 등록
+  form.addEventListener('submit', formSubmitHandler);
+</script>

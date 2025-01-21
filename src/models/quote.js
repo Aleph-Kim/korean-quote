@@ -35,6 +35,16 @@ const quoteModel = sequelize.define('quote', {
         },
         comment: "명언의 카테고리"
     },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        comment: "생성 시각"
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        comment: "수정 시각"
+    }
 }, {
     timestamps: true,
     underscored: true

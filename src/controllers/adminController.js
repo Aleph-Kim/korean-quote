@@ -61,14 +61,29 @@ class AdminController {
         });
     }
 
+    /**
+     * 명언 상세
+     */
+    async createView(req, res, next) {
+        res.render("layout/main", {
+            title: "명언 생성페이지",
+            body: "quote/detail",
+            quote: {},
+        });
+    }
 
     /**
      * 명언 생성
      */
     async createQuote(req, res, next) {
         try {
-            const quote = await adminService.createQuote(req.body);
-            return successResponse(res, quote, "명언 데이터가 생성되었습니다.");
+            if (req.body.id) {
+                const quote = await adminService.updateQuote(req.body);
+                return successResponse(res, quote, "명언 데이터가 수정되었습니다.");
+            } else {
+                const quote = await adminService.createQuote(req.body);
+                return successResponse(res, quote, "명언 데이터가 생성되었습니다.");
+            }
         } catch (err) {
             next(err)
         }

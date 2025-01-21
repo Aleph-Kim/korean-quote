@@ -18,6 +18,12 @@ router.get('/', adminController.quoteList);
 router.get('/detail/:id', parameterValidator.quoteDetail, parameterValidator.handleValidationResult, adminController.quoteDetail);
 
 /**
+ * 명언 상세
+ * @param {number} id - 명언 PK
+ */
+router.get('/create', adminController.createView);
+
+/**
  * 명언 생성
  * @param {string} body 명언 내용
  * @param {string} author 명언을 남긴 사람
