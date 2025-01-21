@@ -1,5 +1,6 @@
 const { successResponse, errorResponse } = require('../helpers/responseHelper');
 const adminService = require('../services/adminService');
+const parameterValidator = require('../middlewares/parameterValidator');
 
 class AdminController {
     /**
@@ -47,6 +48,11 @@ class AdminController {
         const { id } = req.params;
 
         const quote = await adminService.quoteDetail(id);
+
+        if (quote == null) { // 데이터가 없을 때
+            req.customErrors = [{ msg: ' 찾을 수 없는 명언입니다.' }];
+            return parameterValidator.handleValidationResult(req, res, next);
+        }
 
         res.render("layout/main", {
             title: "명언 상세페이지",

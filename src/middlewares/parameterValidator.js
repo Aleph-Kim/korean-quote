@@ -8,10 +8,13 @@ const quoteDetail = [
 ];
 
 const handleValidationResult = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    const errorsFromValidator = validationResult(req).array();
+    const customErrors = req.customErrors || [];
+    const errors = errorsFromValidator.concat(customErrors);
+
+    if (errors.length > 0) {
         // 오류가 있을 경우
-        const errorMessages = errors.array().map(err => err.msg).join(', ');
+        const errorMessages = errors.map(err => err.msg).join(', ');
 
         // 이전 페이지 경로
         const previousPage = req.get('Referrer') || req.headers.referer || '/admin';
