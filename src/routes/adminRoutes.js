@@ -1,10 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
-
+const parameterValidator = require('../middlewares/parameterValidator');
 const adminController = require('../controllers/adminController');
-
-
 
 /**
  * 명언 목록
@@ -13,12 +11,11 @@ const adminController = require('../controllers/adminController');
  */
 router.get('/', adminController.quoteList);
 
-
 /**
  * 명언 상세
  * @param {number} id - 명언 PK
  */
-router.get('/detail/:id', adminController.quoteDetail);
+router.get('/detail/:id', parameterValidator.quoteDetail, parameterValidator.handleValidationResult, adminController.quoteDetail);
 
 /**
  * 명언 생성

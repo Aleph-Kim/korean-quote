@@ -1,0 +1,22 @@
+<div class="flex flex-col items-center justify-center min-h-[70vh] bg-gray-50">
+  <div class="max-w-md text-center space-y-6">
+
+    <!-- 에러 상태 코드 -->
+    <h1 class="text-5xl font-bold text-gray-800">400</h1>
+
+    <!-- 에러 제목 -->
+    <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800">
+      <%- errors %>
+    </h2>
+
+    <!-- 에러 상세 메세지 -->
+    <p class="text-gray-600">
+      url이 올바르지 않거나, 올바르지 않은 값을 포함한 요청일 수 있습니다.
+    </p>
+
+    <!-- 홈으로 돌아가기 버튼 -->
+    <a href="<%- from %>" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition-colors">
+      홈으로 돌아가기
+    </a>
+  </div>
+</div>

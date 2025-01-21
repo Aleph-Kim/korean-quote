@@ -9,6 +9,7 @@ const PORT = 3000;
 const cors = require('cors');
 const path = require('path');
 
+const errorRoutes = require('./routes/errorRoutes');
 const quoteRoutes = require('./routes/quoteRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 라우트 설정
 app.use('/api-docs', express.static('doc'));
+app.use('/error', errorRoutes);
 app.use('/quote', quoteRoutes);
 app.use('/admin', adminRoutes);
 
