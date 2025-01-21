@@ -4,7 +4,21 @@ const router = express.Router();
 
 const adminController = require('../controllers/adminController');
 
-router.get('/list', adminController.quoteList);
+
+
+/**
+ * 명언 목록
+ * @param {number} page - 현재 페이지
+ * @param {number} pageSize - 페이지 당 데이터 수
+ */
+router.get('/', adminController.quoteList);
+
+
+/**
+ * 명언 상세
+ * @param {number} id - 명언 PK
+ */
+router.get('/detail/:id', adminController.quoteDetail);
 
 /**
  * 명언 생성

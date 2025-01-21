@@ -2,6 +2,9 @@ const { successResponse, errorResponse } = require('../helpers/responseHelper');
 const adminService = require('../services/adminService');
 
 class AdminController {
+    /**
+     * 명언 목록
+     */
     async quoteList(req, res, next) {
         // 페이지 번호
         const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
@@ -18,7 +21,7 @@ class AdminController {
         const totalPages = Math.ceil(count / pageSize);
 
         if (totalPages < page) {
-            res.redirect(`/admin/list?page=${totalPages}`)
+            res.redirect(`/admin?page=${totalPages}`)
         }
 
         // 페이지네이션 시작 숫자
@@ -37,11 +40,24 @@ class AdminController {
         });
     }
 
+    /**
+     * 명언 상세
+     */
+    async quoteDetail(req, res, next) {
+        const { id } = req.params;
+
+        const quote = await adminService.quoteDetail(id);
+
+        res.render("layout/main", {
+            title: "명언 상세페이지",
+            body: "quote/detail",
+            quote,
+        });
+    }
+
 
     /**
      * 명언 생성
-     * @param {*} req 요청 객체
-     * @param {*} res 응답 객체
      */
     async createQuote(req, res, next) {
         try {
@@ -54,8 +70,6 @@ class AdminController {
 
     /**
      * JSON 파일로 명언 생성
-     * @param {*} req 요청 객체
-     * @param {*} res 응답 객체
      */
     async createQuoteWithJson(req, res, next) {
         try {

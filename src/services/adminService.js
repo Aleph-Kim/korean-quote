@@ -30,6 +30,32 @@ class AdminService {
     }
 
     /**
+     * 명언 상세
+     * @param {number} id - 명언 PK
+     * @returns {Object} { quote }
+     */
+    async quoteDetail(id) {
+        const quote = await quoteModel.findByPk(id, {
+            attributes: [
+                'id',
+                'body',
+                'author',
+                'authorProfile',
+                [
+                    sequelize.literal(`TO_CHAR(created_at, 'YYYY-MM-DD hh:mm:ss')`),
+                    'createdAt'
+                ],
+                [
+                    sequelize.literal(`TO_CHAR(updated_at, 'YYYY-MM-DD hh:mm:ss')`),
+                    'updatedAt'
+                ],
+            ]
+        });
+
+        return quote
+    }
+
+    /**
      * 명언 생성
      * @param {*} data 
      * @returns quote 객체
