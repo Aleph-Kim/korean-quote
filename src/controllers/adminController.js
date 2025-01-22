@@ -54,10 +54,14 @@ class AdminController {
             return parameterValidator.handleValidationResult(req, res, next);
         }
 
+        const queryStringCookie = req.cookies.listQueryString;
+        const toListLink = "/admin" + (queryStringCookie ? queryStringCookie : '');
+
         res.render("layout/main", {
             title: "명언 상세페이지",
             body: "quote/detail",
             quote,
+            toListLink
         });
     }
 

@@ -117,4 +117,12 @@
 
     window.location.reload();
   }
+
+  // 현재 페이지 쿼리 스트링 쿠키에 저장
+  document.addEventListener("DOMContentLoaded", function() {
+    const queryString = window.location.search;
+    if (queryString) {
+      document.cookie = "listQueryString=" + encodeURIComponent(queryString) + "; path=/";
+    }
+  });
 </script>
