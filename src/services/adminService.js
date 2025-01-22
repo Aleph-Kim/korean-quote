@@ -164,6 +164,13 @@ class AdminService {
         return;
     }
 
+    /**
+     * 쿠키에 저장된 쿼리스트링 값을 읽어와 리스트 페이지로 이동하는 링크를 생성
+     */
+    getToListLink(req){
+        const queryStringCookie = req.cookies.listQueryString;
+        return "/admin" + (queryStringCookie ? queryStringCookie : '');
+    }
 }
 
 module.exports = new AdminService();

@@ -54,8 +54,8 @@ class AdminController {
             return parameterValidator.handleValidationResult(req, res, next);
         }
 
-        const queryStringCookie = req.cookies.listQueryString;
-        const toListLink = "/admin" + (queryStringCookie ? queryStringCookie : '');
+        // 리스트 페이지 이동 링크
+        const toListLink = adminService.getToListLink(req);
 
         res.render("layout/main", {
             title: "명언 상세페이지",
