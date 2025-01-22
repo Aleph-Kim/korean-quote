@@ -76,6 +76,9 @@
     // 폼 데이터 json으로 변환
     const formData = new FormData(form);
     const dataObject = Object.fromEntries(formData.entries());
+    if (dataObject.id == '') { // id 빈값 차단
+      delete dataObject.id;
+    }
     const jsonData = JSON.stringify(dataObject);
 
     const response = await fetch('/admin/quote', {
