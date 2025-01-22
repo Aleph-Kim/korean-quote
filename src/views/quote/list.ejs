@@ -7,6 +7,7 @@
         <th class="px-4 py-2 w-2/5 lg:w-3/5">내용</th>
         <th class="px-4 py-2 w-1/4">남긴이</th>
         <th class="px-4 py-2 w-1/6">생성일</th>
+        <th class="px-4 py-2 w-1/6">삭제</th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +26,11 @@
         <td class="inline sm:table-cell text-center py-3">
           <%- quote.createdAt %>
         </td>
-
+        <td class="inline sm:table-cell text-center py-3">
+          <button data-id="<%- quote.id %>" class="bg-red-500 hover:bg-red-600 py-1 px-2 rounded text-white" onclick="quoteDelete(this)">
+            삭제
+          </button>
+        </td>
       </tr>
       <% }) %>
     </tbody>
@@ -70,8 +75,46 @@
 
   <!-- 글쓰기 버튼 -->
   <div class="flex justify-end mt-4">
-    <a href="/admin/create" class="bg-blue-500 hover:bg-blue-600 text--bold py-2 px-4 rounded">
+    <a href="/admin/create" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
       글쓰기
     </a>
   </div>
 </div>
+
+<script>
+  let isRunning = false;
+
+  async function quoteDelete(ths) {
+    event.stopPropagation(); // 부모 요소의 onclick 이벤트 차단
+
+    // // 요청 중이거나 삭제 취소 시 함수 종료
+    if (isRunning || !confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
+
+    isRunning = true;
+
+    // 폼 데이터 json으로 변환
+    const id = ths.dataset.id;
+    const dataObject = {
+      id: id
+    };
+    const jsonData = JSON.stringify(dataObject);
+
+    const response = await fetch('/admin/quote', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: jsonData
+    });
+
+    // 서버로부터 받은 응답
+    const result = await response.json();
+
+    // 결과 메시지 표시
+    alert(result.message)
+
+    window.location.reload();
+  }
+</script>

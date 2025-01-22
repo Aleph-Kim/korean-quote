@@ -39,5 +39,11 @@ router.post('/quote', adminController.createQuote);
  */
 router.post('/quoteWithJson', multer().single('file'), adminController.createQuoteWithJson);
 
+/**
+ * 명언 삭제
+ * @param {number} id 명언 pk
+ */
+router.delete('/quote', adminController.deleteQuote);
+
 
 module.exports = router;

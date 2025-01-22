@@ -100,5 +100,17 @@ class AdminController {
             next(err)
         }
     };
+
+    /**
+     * 명언 삭제
+     */
+    async deleteQuote(req, res, next) {
+        try {
+            await adminService.deleteQuote(req.body.id);
+            return successResponse(res, null, "명언 데이터가 삭제되었습니다.");
+        } catch (err) {
+            next(err)
+        }
+    }
 }
 module.exports = new AdminController();

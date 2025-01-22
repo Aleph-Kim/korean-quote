@@ -65,18 +65,6 @@ class AdminService {
     }
 
     /**
-     * 명언 수정
-     * @param {*} data 
-     * @returns quote 객체
-     */
-    async updateQuote(data) {
-        return await quoteModel.update(data, {
-            fields: ['body', 'author', 'authorProfile', 'category'],
-            where: { id: data.id }
-        });
-    }
-
-    /**
      * @async
      * @description JSON으로 명언 생성
      * @param {Object} data - 클라이언트로부터 전달된 데이터
@@ -135,6 +123,45 @@ class AdminService {
 
         // 생성된 명언 개수 반환
         return createCount;
+    }
+
+    /**
+     * 명언 수정
+     * @param {*} data 
+     * @returns quote 객체
+     */
+    async updateQuote(data) {
+        return await quoteModel.update(data, {
+            fields: ['body', 'author', 'authorProfile', 'category'],
+            where: { id: data.id }
+        });
+    }
+
+    /**
+     * 명언 삭제
+     * @param {number} id  
+     */
+    async deleteQuote(id) {
+        // 정의되지 않은 필드 존재 시 오류 발생
+        if (id < 1 || isNaN(Number(id))) {
+            const error = new Error(`유효하지 않은 명언 id입니다.`);
+            error.status = 400;
+            throw error;
+        }
+
+        const deleteCount = await quoteModel.destroy({
+            where: {
+                id: id,
+            },
+        });
+
+        if (!deleteCount) {
+            const error = new Error(`유효하지 않은 명언 id입니다.`);
+            error.status = 400;
+            throw error;
+        }
+        
+        return;
     }
 
 }
