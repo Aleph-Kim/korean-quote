@@ -49,12 +49,12 @@
       <% } %>
 
       <% for(let i = startPage; i <= endPage; i++) { %>
-      <li>
+      <li class="<%= i !== currentPage ? 'hidden md:inline' : '' %>">
         <a href="?page=<%= i %>" class="
               px-3 py-1 rounded
               <%= i === currentPage
                     ? 'bg-blue-500 text-white font-bold'
-                    : 'bg-gray-200 text-black hover:bg-gray-300'
+                    : 'bg-gray-200 text-black hover:bg-gray-300 hidden md:inline'
                 %>
             ">
           <%= i %>
