@@ -9,12 +9,14 @@
       </select>
       <input type="text" name="query" placeholder="검색어 입력" class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400" value="<%= query %>" />
     </div>
-    <button type="submit" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-      검색
-    </button>
-    <button type="button" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors" onclick="resetSearch()">
-      초기화
-    </button>
+    <div class="flex">
+      <button type="submit" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+        검색
+      </button>
+      <button type="button" class="mt-2 sm:mt-0 ml-2 px-5 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors" onclick="resetSearch()">
+        초기화
+      </button>
+    </div>
   </form>
 
   <table class="table-fixed w-full border-collapse">
@@ -59,7 +61,6 @@
           </div>
         </td>
       </tr>
-
       <% } %>
     </tbody>
   </table>
