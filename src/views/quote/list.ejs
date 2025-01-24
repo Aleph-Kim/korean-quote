@@ -12,6 +12,9 @@
     <button type="submit" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
       검색
     </button>
+    <button type="button" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors" onclick="resetSearch()">
+      초기화
+    </button>
   </form>
 
   <table class="table-fixed w-full border-collapse">
@@ -97,6 +100,18 @@
 
 <script>
   let isRunning = false;
+
+  /**
+   * 검색 초기화 
+   */
+  function resetSearch() {
+    const form = document.getElementById('searchForm');
+
+    form.searchType.value = 'body';
+    form.query.value = '';
+
+    form.submit();
+  }
 
   async function quoteDelete(ths) {
     event.stopPropagation(); // 부모 요소의 onclick 이벤트 차단
