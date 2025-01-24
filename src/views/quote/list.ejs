@@ -28,6 +28,7 @@
       </tr>
     </thead>
     <tbody>
+      <% if (quotes.length > 0) { %>
       <% quotes.forEach(function(quote){ %>
       <tr class="border-b block sm:table-row py-2 cursor-pointer hover:bg-gray-200" onclick="window.location.href = '/admin/detail/<%- quote.id %>'">
         <td class="hidden sm:table-cell text-center py-3">
@@ -50,6 +51,16 @@
         </td>
       </tr>
       <% }) %>
+      <% } else { %>
+      <tr>
+        <td colspan="6" class="py-6">
+          <div class="flex flex-col items-center justify-center text-gray-500">
+            <span class="text-lg font-semibold">명언이 존재하지 않습니다.</span>
+          </div>
+        </td>
+      </tr>
+
+      <% } %>
     </tbody>
   </table>
 
