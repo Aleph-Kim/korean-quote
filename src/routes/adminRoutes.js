@@ -4,6 +4,12 @@ const router = express.Router();
 const parameterValidator = require('../middlewares/parameterValidator');
 const adminController = require('../controllers/adminController');
 
+// 템플릿에 로그인 여부 전달
+router.use((req, res, next) => {
+    res.locals.isAdmin = !!req.session.isAdmin;
+    next();
+});
+
 /**
  * 명언 목록
  * @param {number} page - 현재 페이지

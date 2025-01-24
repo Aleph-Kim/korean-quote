@@ -1,0 +1,22 @@
+<form action="/auth/login" method="POST" class="max-w-sm mx-auto p-6 bg-white rounded-md shadow-md space-y-5">
+  <!-- 폼 헤더 -->
+  <h1 class="text-bold text-xl mb-4">관리자 로그인</h1>
+
+  <!-- 비밀번호 입력 -->
+  <div>
+    <label for="password" class="block mb-1 font-medium text-gray-600">비밀번호</label>
+    <input type="password" name="password" id="password" class="w-full border border-gray-300 rounded px-3 py-2 text-gray-700 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200" placeholder="비밀번호를 입력하세요" required/>
+  </div>
+
+  <!-- 에러 메시지 -->
+  <% if (error) { %>
+  <div class="text-red-500 text-sm">
+    <%= error %>
+  </div>
+  <% } %>
+
+  <!-- 버튼 -->
+  <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded transition duration-200">
+    로그인
+  </button>
+</form>
