@@ -73,13 +73,17 @@ class AdminController {
     }
 
     /**
-     * 명언 상세
+     * 명언 생성
      */
     async createView(req, res, next) {
+        // 리스트 페이지 이동 링크
+        const toListLink = adminService.getToListLink(req);
+
         res.render("layout/main", {
             title: "명언 생성페이지",
             body: "quote/detail",
             quote: {},
+            toListLink
         });
     }
 
