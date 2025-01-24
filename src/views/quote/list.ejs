@@ -1,13 +1,13 @@
 <div class="bg-white rounded-lg shadow p-6">
   <h1 class="text-bold text-xl mb-4">게시판</h1>
   <!-- 검색 폼 -->
-  <form id="searchForm" class="mb-6 flex flex-col sm:flex-row items-center bg-gray-50 p-4 rounded border border-gray-200" method="GET" action="">
+  <form id="searchForm" class="mb-6 flex flex-col sm:flex-row items-center bg-gray-50 p-4 rounded border border-gray-200" method="GET">
     <div class="flex flex-col sm:flex-row items-stretch w-full sm:space-x-2 space-y-2 sm:space-y-0">
-      <select name="type" class="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400">
-        <option value="body" <%= true === 'body' ? 'selected' : '' %>>내용</option>
-        <option value="author" <%= true === 'author' ? 'selected' : '' %>>남긴이</option>
+      <select name="searchType" class="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400">
+        <option value="body" <%= searchType === 'body' ? 'selected' : '' %>>내용</option>
+        <option value="author" <%= searchType === 'author' ? 'selected' : '' %>>남긴이</option>
       </select>
-      <input type="text" name="query" placeholder="검색어 입력" class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400" value="<%= typeof query !== 'undefined' ? query : '' %>" />
+      <input type="text" name="query" placeholder="검색어 입력" class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400" value="<%= query %>" />
     </div>
     <button type="submit" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
       검색
@@ -56,7 +56,7 @@
       <% if (currentPage > 1) { %>
       <!-- 이전 버튼 -->
       <li>
-        <a href="?page=<%= currentPage - 1 %>" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300">
+        <a href="<%= `?page=${currentPage - 1}&searchType=${searchType}&query=${query}` %>" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300">
           이전
         </a>
       </li>
@@ -64,7 +64,7 @@
 
       <% for(let i = startPage; i <= endPage; i++) { %>
       <li class="<%= i !== currentPage ? 'hidden md:inline' : '' %>">
-        <a href="?page=<%= i %>" class="
+        <a href="<%= `?page=${i}&searchType=${searchType}&query=${query}` %>" class="
               px-3 py-1 rounded
               <%= i === currentPage
                     ? 'bg-blue-500 text-white font-bold'
@@ -79,7 +79,7 @@
       <% if (currentPage < totalPages) { %>
       <!-- 다음 버튼 -->
       <li>
-        <a href="?page=<%= currentPage + 1 %>" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300">
+        <a href="<%= `?page=${currentPage + 1}&searchType=${searchType}&query=${query}` %>" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300">
           다음
         </a>
       </li>

@@ -1,15 +1,32 @@
 const quoteModel = require("../models/quote")
 const sequelize = require('../config/db');
 
+const { Op } = require('sequelize');
+
 class AdminService {
     /**
      * 명언 목록
      * @param {number} page - 현재 페이지
      * @param {number} pageSize - 페이지 당 데이터 수
+     * @param {String} query - 검색어
+     * @param {String} searchType - 검색 타입
      * @returns {Object} { rows, count }
      */
-    async quoteList(page, pageSize) {
+    async quoteList(page, pageSize, query, searchType) {
         const offset = (page - 1) * pageSize;
+
+        // 검색어
+        const where = {};
+        if (query) {
+            switch (searchType) {
+                case 'author':
+                    where.author = { [Op.iLike]: `%${query}%` };
+                    break;
+                case 'body':
+                    where.body = { [Op.iLike]: `%${query}%` };
+                    break;
+            }
+        }
 
         const { rows, count } = await quoteModel.findAndCountAll({
             attributes: [
@@ -21,9 +38,10 @@ class AdminService {
                     'createdAt',
                 ],
             ],
+            where,
             order: [['id', 'DESC']],
             limit: pageSize,
-            offset: offset
+            offset
         });
 
         return { rows, count };
@@ -160,14 +178,14 @@ class AdminService {
             error.status = 400;
             throw error;
         }
-        
+
         return;
     }
 
     /**
      * 쿠키에 저장된 쿼리스트링 값을 읽어와 리스트 페이지로 이동하는 링크를 생성
      */
-    getToListLink(req){
+    getToListLink(req) {
         const queryStringCookie = req.cookies.listQueryString;
         return "/admin" + (queryStringCookie ? queryStringCookie : '');
     }

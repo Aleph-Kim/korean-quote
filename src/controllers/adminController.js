@@ -7,6 +7,11 @@ class AdminController {
      * 명언 목록
      */
     async quoteList(req, res, next) {
+        // 검색어
+        const query = req.query.query || '';
+        // 검색 타입
+        const searchType = req.query.searchType || '';
+
         // 페이지 번호
         const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
 
@@ -16,13 +21,13 @@ class AdminController {
         // 표시할 페이지 개수
         const showPageCount = 10;
 
-        const { rows: quotes, count } = await adminService.quoteList(page, pageSize);
+        const { rows: quotes, count } = await adminService.quoteList(page, pageSize, query, searchType);
 
         // 전체 페이지 수
         const totalPages = Math.ceil(count / pageSize);
 
-        if (totalPages < page) {
-            res.redirect(`/admin?page=${totalPages}`)
+        if (totalPages && totalPages < page) {
+            res.redirect(`/admin?page=${totalPages}&searchType=${searchType}&query=${query}`);
         }
 
         // 페이지네이션 시작 숫자
@@ -37,7 +42,9 @@ class AdminController {
             currentPage: page,
             totalPages,
             startPage,
-            endPage
+            endPage,
+            searchType,
+            query
         });
     }
 
