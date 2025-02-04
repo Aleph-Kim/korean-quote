@@ -11,6 +11,9 @@ class AdminController {
         const query = req.query.query || '';
         // 검색 타입
         const searchType = req.query.searchType || '';
+        
+        // 정렬 조건
+        const sort = req.query.sort || 'latest';
 
         // 페이지 번호
         const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
@@ -21,7 +24,7 @@ class AdminController {
         // 표시할 페이지 개수
         const showPageCount = 10;
 
-        const { rows: quotes, count } = await adminService.quoteList(page, pageSize, query, searchType);
+        const { rows: quotes, count } = await adminService.quoteList(page, pageSize, query, searchType, sort);
 
         // 전체 페이지 수
         const totalPages = Math.ceil(count / pageSize);
@@ -44,7 +47,8 @@ class AdminController {
             startPage,
             endPage,
             searchType,
-            query
+            query,
+            sort
         });
     }
 

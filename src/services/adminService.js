@@ -12,7 +12,7 @@ class AdminService {
      * @param {String} searchType - 검색 타입
      * @returns {Object} { rows, count }
      */
-    async quoteList(page, pageSize, query, searchType) {
+    async quoteList(page, pageSize, query, searchType, sort) {
         const offset = (page - 1) * pageSize;
 
         // 검색어
@@ -28,6 +28,17 @@ class AdminService {
             }
         }
 
+        // 정렬
+        const order = [];
+        switch (sort) {
+            case "latest": // 최신순
+                order.push(['id', 'DESC']);
+                break;
+            case "abc": // 본문 ㄱㄴㄷ순
+                order.push(['body', 'ASC']);
+                break;
+        }
+
         const { rows, count } = await quoteModel.findAndCountAll({
             attributes: [
                 'id',
@@ -39,7 +50,7 @@ class AdminService {
                 ],
             ],
             where,
-            order: [['id', 'DESC']],
+            order: order,
             limit: pageSize,
             offset
         });
