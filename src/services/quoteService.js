@@ -9,7 +9,7 @@ class QuoteService {
      */
     async randomQuote() {
         const quote = await quoteModel.findOne({
-            order: Sequelize.literal('RANDOM()')
+            order: Sequelize.literal('RAND()')
         });
 
         return {
@@ -46,7 +46,7 @@ class QuoteService {
 
             todayQuote = await quoteModel.findOne({
                 where: todayWhere,
-                order: Sequelize.literal('RANDOM()')
+                order: Sequelize.literal('RAND()')
             });
 
             todayQuoteModel.create({
