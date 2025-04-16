@@ -20,10 +20,10 @@ class AdminService {
         if (query) {
             switch (searchType) {
                 case 'author':
-                    where.author = { [Op.iLike]: `%${query}%` };
+                    where.author = { [Op.like]: `%${query}%` };
                     break;
                 case 'body':
-                    where.body = { [Op.iLike]: `%${query}%` };
+                    where.body = { [Op.like]: `%${query}%` };
                     break;
             }
         }
@@ -45,7 +45,7 @@ class AdminService {
                 'body',
                 'author',
                 [
-                    sequelize.literal(`TO_CHAR(created_at, 'YYYY-MM-DD')`),
+                    sequelize.literal(`DATE_FORMAT(created_at, '%Y-%m-%d')`),
                     'createdAt',
                 ],
             ],
@@ -71,11 +71,11 @@ class AdminService {
                 'author',
                 'authorProfile',
                 [
-                    sequelize.literal(`TO_CHAR(created_at, 'YYYY-MM-DD hh:mm:ss')`),
+                    sequelize.literal(`DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s')`),
                     'createdAt'
                 ],
                 [
-                    sequelize.literal(`TO_CHAR(updated_at, 'YYYY-MM-DD hh:mm:ss')`),
+                    sequelize.literal(`DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s')`),
                     'updatedAt'
                 ],
             ]
